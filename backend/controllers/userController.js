@@ -3,6 +3,11 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors")
 
 const User = require('../models/userModels')
 
+const crypto = require("crypto")
+
+
+const sendEmail = require('../utils/sendEmail.js')
+
 const sendToken = require('../utils/jwtToken')
 
 //Register a user
@@ -81,4 +86,74 @@ exports.forgotPassword = catchAsyncErrors(async(req, res, next)=>{
     await user.save({validateBeforeSave: false})
 
     const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`
+
+    const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\n if you have not requested, then ignore` 
+
+    try{
+
+        await sendEmail({
+            email: user.email,
+            subject: `Nileos Password Recovery`,
+            message
+        })
+
+        res.status(200).json({
+            success: true,
+            message: `Email sent to ${user.email} successfully`
+        })
+
+    }catch(error){
+        user.resetPasswordToken = undefined
+        user.resetPasswordExpire = undefined
+        await user.save({validateBeforeSave: false})
+
+        return next(new ErrorHandler(error.message, 500))
+    }
+})
+
+//Reset Password
+
+exports.resetPassword = catchAsyncErrors(async(req, res, next)=>{
+
+    //creating token hash
+    const resetPasswordtoken = crypto.createHash("sha256").update(req.params.token).digest("hex")
+
+    const user = await User.findOne({
+        resetPasswordtoken,
+        resetPasswordExpire: {$gt: Date.now()}
+    })
+
+    if(!user){
+        return next(new ErrorHandler("Reset password token is invalid or has expired"), 400)
+    }
+
+    if(req.body.password !==  req.body.confirmPassword){
+
+        return next(new ErrorHandler("Password doesnt match"), 400)
+
+    } 
+
+    user.password = req.body.password
+    user.resetPasswordToken = undefined
+    user.resetPasswordExpire = undefined
+
+    await user.save()
+
+    sendToken(user, 200, res)
+
+})
+
+//Get user details
+
+exports.getUserDetails = catchAsyncErrors(async(req, res, next)=>{
+
+    const user = await User.findById(req.user.id)
+
+    res.status(200).json({
+        success:true,
+        user
+
+    })
+
+
 })
