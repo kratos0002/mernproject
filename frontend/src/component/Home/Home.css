@@ -60,6 +60,16 @@
     margin: 5vmax auto;
 }
 
+.container {
+
+    display: flex;
+    margin: 2vmax auto;
+    width: 80%;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
 .productCard{
     width: 14vmax;
     display: flex;
@@ -102,5 +112,26 @@
 .productCard:hover{
     box-shadow: 0 0 5px black;
     transform: translate(-1vmax);
+}
 
+
+@media screen and (max-width:600px) {
+
+    .productCard >p {
+        font-size: 1.7vmax;
+    }
+
+    .productCard > div {
+        margin: 0vmax;
+        display: block;
+    }
+
+    .productCard >span {
+        font-size: 1.5vmax;
+    }
+    
+    .productCard > div > span {
+        margin: 0 0.5vmax;
+        font: 300 1vmax "Roboto"
+    }
 }

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import "./Home.css"
 import Product from "./Product.js"
+import Metadata from '../layout/MetaData'
+
 
 const product = {
     name: "Blue tee",
@@ -12,6 +14,8 @@ const product = {
 const Home = () => {
   return <Fragment>
 
+      <Metadata title="NILEOS" />
+
       <div className='banner'>
           <p>Welcome to Nileos</p>
           <h1>Find Amazing products at good prices</h1>
@@ -19,8 +23,6 @@ const Home = () => {
           <a href="#container">
               <button>
                   Scroll 
-
-
               </button>
               
               
@@ -30,8 +32,13 @@ const Home = () => {
 
           <div className='container' id ="container">
               <Product product ={product} />
-
-
+              <Product product ={product} />
+              <Product product ={product} />
+              <Product product ={product} />
+              <Product product ={product} />
+              <Product product ={product} />
+              <Product product ={product} />
+              <Product product ={product} />
           </div>
 
   </Fragment>
