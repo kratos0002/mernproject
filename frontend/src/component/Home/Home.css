@@ -36,7 +36,71 @@
     background-color: rgba(255,255,255,0);
     color:white
 
+}
 
+.banner::after{
+    content:"";
+    width:100vw;
+    height: 100vmin;
+    background-color: #ffffff;
+    position:absolute;
+    top: 0%;
+    left: 0;
+    clip-path: polygon(79% 81%, 0% 100%, 100% 100%);
+    max-width: 100%;
+}
 
+.homeHeading{
+    text-align: center;
+    font-family: Roboto;
+    font-size: 1.4vmax;
+    border-bottom: 1px solid rgba(21,23,21,0.5);
+    width: 20vmax;
+    padding: 1vmax;
+    margin: 5vmax auto;
+}
+
+.productCard{
+    width: 14vmax;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+    margin: 2vmax;
+    padding-bottom: 0.5vmax;
+    transition: all 0.5s;
+}
+
+.productCard > img {
+    width: 14vmax;
+}
+
+.productCard > div {
+    margin: 0.5vmax;
+    /* display: flex; */
+    /* justify-content: flex-end; */
+}
+
+.productCard > div >span {
+    margin: 0.5vmax;
+    font: 300 0.7vmax "Roboto";
+}
+
+.productCard > p {
+    font-family: "Roboto";
+    font-size: 1.2vmax;
+    margin: 1vmax 0.5vmax;
+    margin-bottom: 0;
+}
+.productCard > span {
+    margin: 0.5vmax 0.5vmax;
+    color:tomato;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.4vmax;
+}
+
+.productCard:hover{
+    box-shadow: 0 0 5px black;
+    transform: translate(-1vmax);
 
 }
