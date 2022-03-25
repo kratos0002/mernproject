@@ -1,17 +1,22 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import "./Home.css"
 import Product from "./Product.js"
 import Metadata from '../layout/MetaData'
+import {getProduct} from "../../actions/productActions"
+import {useSelector, useDispatch} from 'react-redux'
 
-
-const product = {
-    name: "Blue tee",
-    images:[{url:"https://i.ibb.co/DRST11n/1.webp"}],
-    price:"3000",
-    _id:"vishal"
-}
 
 const Home = () => {
+const dispatch = useDispatch()
+
+
+useEffect(()=>{
+    dispatch(getProduct())
+},[dispatch])
+
+const {loading, error, products, productsCount} = useSelector(state=>state.products)
+
+
   return <Fragment>
 
       <Metadata title="NILEOS" />
@@ -31,14 +36,10 @@ const Home = () => {
           <h2 className='homeHeading'>Featured Products</h2>
 
           <div className='container' id ="container">
-              <Product product ={product} />
-              <Product product ={product} />
-              <Product product ={product} />
-              <Product product ={product} />
-              <Product product ={product} />
-              <Product product ={product} />
-              <Product product ={product} />
-              <Product product ={product} />
+            {products && products.map(product=>(
+                <Product product = {product} />
+            ))}
+
           </div>
 
   </Fragment>
