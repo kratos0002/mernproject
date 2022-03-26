@@ -22,11 +22,9 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) =>{
 
 exports.getAllProducts = catchAsyncErrors(async (req,res, next) =>{
 
-    
-
 
     const resultPerPage = 8
-    const productCount = await Product.countDocuments()
+    const productsCount = await Product.countDocuments()
 
 
     const apiFeature = new ApiFeatures(Product.find(), req.query).search().filter().pagination(resultPerPage)
@@ -36,7 +34,7 @@ exports.getAllProducts = catchAsyncErrors(async (req,res, next) =>{
     res.status(200).json({
         success: true,
         products,
-        productCount
+        productsCount
 
     })
 })

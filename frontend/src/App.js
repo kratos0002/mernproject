@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import {React, useEffect} from "react";
 import Home from "./component/Home/Home.js"
 import Loader from "./component/layout/Loader/Loader";
+import ProductDetails from "./component/Product/ProductDetails.js"
 
 
 
@@ -32,6 +33,7 @@ function App() {
       <Header/>
       <Routes>
       <Route path="/" element ={<Home />} />
+      <Route path="/product/:id" element ={<ProductDetails />} />
       </Routes>
       <Footer />
 
