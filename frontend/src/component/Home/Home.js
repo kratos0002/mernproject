@@ -4,45 +4,66 @@ import Product from "./Product.js"
 import Metadata from '../layout/MetaData'
 import {getProduct} from "../../actions/productActions"
 import {useSelector, useDispatch} from 'react-redux'
-
+import Loader from '../layout/Loader/Loader'
+import { useAlert } from 'react-alert'
 
 const Home = () => {
+
+const alert = useAlert()
 const dispatch = useDispatch()
-
-
-useEffect(()=>{
-    dispatch(getProduct())
-},[dispatch])
-
 const {loading, error, products, productsCount} = useSelector(state=>state.products)
 
 
-  return <Fragment>
+useEffect(()=>{
 
-      <Metadata title="NILEOS" />
+if(error){
+    return alert.error(error)
 
-      <div className='banner'>
-          <p>Welcome to Nileos</p>
-          <h1>Find Amazing products at good prices</h1>
+}
+    dispatch(getProduct())
+},[dispatch,error])
 
-          <a href="#container">
-              <button>
-                  Scroll 
-              </button>
-              
-              
-            </a>
-          </div>
-          <h2 className='homeHeading'>Featured Products</h2>
 
-          <div className='container' id ="container">
-            {products && products.map(product=>(
-                <Product product = {product} />
-            ))}
 
-          </div>
+
+  return (
+
+  <Fragment>
+
+      {loading ? <Loader />:
+          <Fragment>
+
+          <Metadata title="NILEOS" />
+    
+          <div className='banner'>
+              <p>Welcome to Nileos</p>
+              <h1>Find Amazing products at good prices</h1>
+    
+              <a href="#container">
+                  <button>
+                      Scroll 
+                  </button>
+                  
+                  
+                </a>
+              </div>
+              <h2 className='homeHeading'>Featured Products</h2>
+    
+              <div className='container' id ="container">
+                {products && products.map(product=>(
+                    <Product product = {product} />
+                ))}
+    
+              </div>
+    
+      </Fragment>}
+
+
+
 
   </Fragment>
+  
+  )
 }
 
 export default Home
